@@ -9,7 +9,6 @@
 #import "UITextView+UITextViewAdditions.h"
 
 #define LINE_HEIGHT (25.f)
-#define FONT_SIZE   (18.f)
 
 @implementation UITextView (UITextViewAdditions)
 
@@ -29,7 +28,7 @@
   NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
   
   float mylineSpacing = (lineSpacing>0 ? lineSpacing : LINE_HEIGHT);
-  float myfontSize = (fontSize>0 ? fontSize : FONT_SIZE);
+  float myfontSize = (fontSize>0 ? fontSize : [UIFont systemFontSize]);
   
   style.minimumLineHeight = mylineSpacing;
   style.maximumLineHeight = mylineSpacing;
