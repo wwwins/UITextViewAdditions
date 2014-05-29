@@ -11,5 +11,5 @@ NSString *content = @"blah blah blah blah...";
 UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 300)];
 [self.view addSubview:textView];
 
-[self.textView styleTextViewWithShowingAll:content lineSpacing:25.0f];
+[textView styleTextViewWithShowingAll:content lineSpacing:25.0f];
 ```
