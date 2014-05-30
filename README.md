@@ -12,4 +12,7 @@ UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300,
 [self.view addSubview:textView];
 
 [textView styleTextViewWithShowingAll:content lineSpacing:25.0f];
+
+// customize
+[textView styleTextView:content showingAll:NO fontSize:17.0f lineSpacing:25.0f];
 ```
