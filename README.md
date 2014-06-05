@@ -4,7 +4,8 @@ UITextViewAdditions
 Fixed UITextView issues in iOS6 &amp; 7
 
 ### Example
-`Need to disable autoresize subviews.`
+*Need to disable autoresize subviews.*
+
 `#import "UITextView+UITextViewAdditions.h"`
 ```
 NSString *content = @"blah blah blah blah...";
