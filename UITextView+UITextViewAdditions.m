@@ -40,7 +40,7 @@
 
   [self setAttributedText:[[NSAttributedString alloc] initWithString:content attributes:attributes]];
   
-  // fixed: font-size note updated in ios6
+  // fixed: font-size not working in ios6
   [self setEditable:YES];
   [self setFont:[UIFont fontWithName:@"Helvetica" size:myfontSize]];
   [self setEditable:NO];
