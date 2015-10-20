@@ -1,13 +1,13 @@
 UITextViewAdditions
 ===================
 
-Add UITextView Additions for iOS8/iOS9.
+Added UITextView Additions for iOS8/iOS9.
 
 ### Example
 *Support Storyboard and AutoLayout.*
 
 `#import "UITextView+UITextViewAdditions.h"`
-```
+```objc
 [self.textView addTitle:@"這是大標題\n"];
 //insert static image
 [self.textView addImage:[UIImage imageNamed:@"Toolbox-180"]];
