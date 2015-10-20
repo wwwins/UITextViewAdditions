@@ -8,58 +8,74 @@
 
 #import "UITextView+UITextViewAdditions.h"
 
-#define LINE_HEIGHT (25.f)
+#define LINE_SPACE (5.f)
 
 @implementation UITextView (UITextViewAdditions)
 
-- (CGFloat)measureHeightOfUITextView
+- (void)addText:(NSString *)text textStyle:(NSString *)textStyle fontColor:(UIColor *)fontColor lineSpacing:(float)lineSpacing backgroundColor:(UIColor *)backgroundColor
 {
-  return [self sizeThatFits:CGSizeMake(self.frame.size.width, FLT_MAX)].height;
-}
+  UIFont *font = (textStyle.length > 0) ? [UIFont preferredFontForTextStyle:textStyle] : [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+  UIColor *foregroundColor = fontColor ? fontColor : [UIColor darkTextColor];
+  UIColor *color = backgroundColor ? backgroundColor : [UIColor whiteColor];
 
-- (void)styleTextView:(NSString *)content showingAll:(BOOL)showingAll fontSize:(float)fontSize lineSpacing:(float)lineSpacing
-{
-  if (showingAll) {
-    // disable scrolling
-    [self setScrollEnabled:NO];
-  }
-  
-  // adjust lineSpacing
-  NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-  
-  float mylineSpacing = (lineSpacing>0 ? lineSpacing : LINE_HEIGHT);
-  float myfontSize = (fontSize>0 ? fontSize : [UIFont systemFontSize]);
-  
-  style.minimumLineHeight = mylineSpacing;
-  style.maximumLineHeight = mylineSpacing;
-  style.lineHeightMultiple = mylineSpacing;
- 
+  NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+  style.lineSpacing = (lineSpacing>0 ? lineSpacing : LINE_SPACE);
+
   NSDictionary *attributes = @{
                                NSParagraphStyleAttributeName : style,
+                               NSForegroundColorAttributeName: foregroundColor,
+                               NSBackgroundColorAttributeName: color,
+                               NSFontAttributeName: font
                                };
 
-  [self setAttributedText:[[NSAttributedString alloc] initWithString:content attributes:attributes]];
-  
-  // fixed: font-size not working in ios6
-  [self setEditable:YES];
-  [self setFont:[UIFont fontWithName:@"Helvetica" size:myfontSize]];
-  [self setEditable:NO];
-  
-  if (showingAll) {
-    CGRect frame = self.frame;
-    frame.size.height = [self measureHeightOfUITextView] + myfontSize;
-    [self setFrame:frame];
-  }
+  NSMutableAttributedString *attributedString = [self.attributedText mutableCopy];
+  [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:text attributes:attributes]];
+
+  self.attributedText = attributedString;
 }
 
-- (void)styleTextViewWithShowingAll:(NSString *)content lineSpacing:(float)lineSpacing
+- (void)addBody:(NSString *)body
 {
-  [self styleTextView:content showingAll:YES fontSize:0 lineSpacing:lineSpacing];
+  [self addText:body textStyle:UIFontTextStyleBody fontColor:[UIColor darkTextColor] lineSpacing:LINE_SPACE backgroundColor:nil];
 }
 
-- (void)styleTextViewWithScroll:(NSString *)content lineSpacing:(float)lineSpacing
+- (void)addTitle:(NSString *)title
 {
-  [self styleTextView:content showingAll:NO fontSize:0 lineSpacing:lineSpacing];
+  [self addText:title textStyle:UIFontTextStyleHeadline fontColor:[UIColor darkTextColor] lineSpacing:LINE_SPACE backgroundColor:nil];
 }
+
+- (void)addTitle:(NSString *)title backgroundColor:(UIColor *)backgroundColor
+{
+  [self addText:title textStyle:UIFontTextStyleHeadline fontColor:[UIColor darkTextColor] lineSpacing:LINE_SPACE backgroundColor:backgroundColor];
+}
+
+- (void)addSubTitle:(NSString *)subtitle
+{
+  [self addText:subtitle textStyle:UIFontTextStyleSubheadline fontColor:[UIColor darkTextColor] lineSpacing:LINE_SPACE backgroundColor:nil];
+}
+
+- (void)addSubTitle:(NSString *)subtitle backgroundColor:(UIColor *)backgroundColor
+{
+  [self addText:subtitle textStyle:UIFontTextStyleSubheadline fontColor:[UIColor darkTextColor] lineSpacing:LINE_SPACE backgroundColor:backgroundColor];
+}
+
+- (void)addLineSpace
+{
+  [self addText:@"\n" textStyle:nil fontColor:nil lineSpacing:0 backgroundColor:nil];
+}
+
+- (void)addImage:(UIImage *)image
+{
+  NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+  attachment.image = image;
+  attachment.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
+  NSDictionary *attributes = @{
+                               NSAttachmentAttributeName:attachment
+                              };
+  NSMutableAttributedString *attributedString = [self.attributedText mutableCopy];
+  [attributedString appendAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
+  self.attributedText = attributedString;
+}
+
 
 @end

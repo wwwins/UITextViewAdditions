@@ -10,13 +10,20 @@
 
 @interface UITextView (UITextViewAdditions)
 
-- (CGFloat)measureHeightOfUITextView;
+- (void)addText:(NSString *)text textStyle:(NSString *)textStyle fontColor:(UIColor *)fontColor lineSpacing:(float)lineSpacing backgroundColor:(UIColor *)backgroundColor;
 
-- (void)styleTextView:(NSString *)content showingAll:(BOOL)showingAll fontSize:(float)fontSize lineSpacing:(float)lineSpacing;
+- (void)addBody:(NSString *)body;
 
-- (void)styleTextViewWithShowingAll:(NSString *)content lineSpacing:(float)lineSpacing;
+- (void)addTitle:(NSString *)title;
 
-- (void)styleTextViewWithScroll:(NSString *)content lineSpacing:(float)lineSpacing;
+- (void)addTitle:(NSString *)title backgroundColor:(UIColor *)backgroundColor;
 
+- (void)addSubTitle:(NSString *)subtitle;
+
+- (void)addSubTitle:(NSString *)subtitle backgroundColor:(UIColor *)backgroundColor;
+
+- (void)addLineSpace;
+
+- (void)addImage:(UIImage *)image;
 
 @end
